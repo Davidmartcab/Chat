@@ -2,18 +2,19 @@ import java.io.*;
 import java.net.*;
 import java.util.HashMap;
 
-public class Server extends Thread{
+public class Server{
 
-    private final int port;
-    private final HashMap<String, IpPort> map;
+    private static final int port = 9090;
 
-    public Server (int port, HashMap<String, IpPort> map) {
-        this.port = port;
-        this.map = map;
-    }
 
-    public void run(){
-        // Abrimos el socket en modo pasivo, escuchando el en puerto indicado por "port"
+    private final static HashMap<String, IpPort> map = new HashMap<>(){{
+        put("127.0.0.1", new IpPort(9090, "Yo"));
+        put("192.168.13.28", new IpPort(9090, "Mario"));
+        put("192.168.13.22", new IpPort(9090, "Asier"));
+        put("192.168.13.37", new IpPort(9090, "David"));
+    }};
+
+    public static void main(String[] args) throws Exception {
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             System.out.println("S: Servidor escuchando en el puerto " + port);
 
