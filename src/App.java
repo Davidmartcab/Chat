@@ -20,7 +20,7 @@ public class App {
         System.out.println("C: Introducir líneas. Línea vacía para terminar.");
         System.out.println("C: Línea > ");
         try {
-            while((texto = "\n"+br.readLine()) != null && texto.length() > 0){
+            while((texto = br.readLine()) != null && texto.length() > 0){
                 for(String ip : map.keySet()){
                     client.sender(texto, ip, map.get(ip).getPort());
                 }
