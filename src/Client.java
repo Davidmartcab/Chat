@@ -1,5 +1,6 @@
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Client extends Thread{
@@ -7,13 +8,16 @@ public class Client extends Thread{
     String mensaje;
     String ip;
     int port;
+    ArrayList<String> errores;
+    
 
     private final HashMap<String, IpPort> map = MyContacts.getMap();
 
-    public Client(String mensaje, String ip, int port){
+    public Client(String mensaje, String ip, int port, ArrayList<String> errores){
         this.mensaje = mensaje;
         this.ip = ip;
         this.port = port;
+        this.errores = errores;
     }
 
     public void run(){
@@ -23,7 +27,8 @@ public class Client extends Thread{
             String name;
             if(map.get(ip) == null) name = ip;
             else name = map.get(ip).getName();
-            System.out.println("C. Error: El mensaje: '" + mensaje + "', no ha llegado al receptor: " + name + ".");
+            errores.add("C. Error: El mensaje: '" + mensaje + "', no ha llegado al receptor: " + name + ".");
+            // System.out.println("C. Error: El mensaje: '" + mensaje + "', no ha llegado al receptor: " + name + ".");
         }
     }
 
