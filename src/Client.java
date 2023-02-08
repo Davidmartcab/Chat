@@ -1,12 +1,24 @@
 import java.io.*;
 import java.net.*;
 
-public class Client{
+public class Client extends Thread{
 
-    
+    String mensaje;
+    String ip;
+    int port;
 
-    public Client(){
+    public Client(String mensaje, String ip, int port){
+        this.mensaje = mensaje;
+        this.ip = ip;
+        this.port = port;
+    }
 
+    public void run(){
+        try {
+            sender(mensaje, ip, port);
+        } catch (Exception e) {
+            System.out.println("C. Error: " + e.getMessage());
+        }
     }
 
     public void sender(String mensaje, String ip, int port) throws UnknownHostException, IOException{
