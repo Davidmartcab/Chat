@@ -26,7 +26,7 @@ public class App {
                 }
             }
         } catch (Exception e) {
-            System.out.println("C. Error: " + e.getMessage());
+            System.out.println("A. Error: " + e.getMessage());
         }
     }
 }
