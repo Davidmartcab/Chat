@@ -9,7 +9,7 @@ public class Server{
 
     private final static HashMap<String, IpPort> map = new HashMap<>(){{
 
-        put("192.168.13.37", new IpPort(9090, "David"));
+        put("192.168.13.37", new IpPort(3000, "David"));
     }};
 
     public static void main(String[] args) throws Exception {
