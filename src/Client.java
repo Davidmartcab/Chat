@@ -1,11 +1,14 @@
 import java.io.*;
 import java.net.*;
+import java.util.HashMap;
 
 public class Client extends Thread{
 
     String mensaje;
     String ip;
     int port;
+
+    private final HashMap<String, IpPort> map = MyContacts.getMap();
 
     public Client(String mensaje, String ip, int port){
         this.mensaje = mensaje;
@@ -17,7 +20,10 @@ public class Client extends Thread{
         try {
             sender(mensaje, ip, port);
         } catch (Exception e) {
-            System.out.println("C. Error: El mensaje: '" + mensaje + "', no ha llegado al receptor: " + ip + ".");
+            String name;
+            if(map.get(ip) == null) name = ip;
+            else name = map.get(ip).getName();
+            System.out.println("C. Error: El mensaje: '" + mensaje + "', no ha llegado al receptor: " + name + ".");
         }
     }
 
