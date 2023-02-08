@@ -7,11 +7,7 @@ public class Server{
     private static final int port = 9090;
 
 
-    private final static HashMap<String, IpPort> map = new HashMap<>(){{
-        put("192.168.13.28", new IpPort(9090, "Mario"));
-        put("192.168.13.22", new IpPort(9090, "Asier"));
-        put("192.168.13.37", new IpPort(9090, "David"));
-    }};
+    private final static HashMap<String, IpPort> map = MyContacts.getMap();
 
     public static void main(String[] args) throws Exception {
         try (ServerSocket serverSocket = new ServerSocket(port)) {
