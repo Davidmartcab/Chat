@@ -37,7 +37,7 @@ public class Server extends Thread{
                 String inputLine;
                 while ((inputLine = in.readLine()) != null) {
                     // SI hay texto lo puestra y le envía un mensaje de vuelta
-                    System.out.println("\nS. " + name + ": " + inputLine);
+                    System.out.println("S. " + name + ": " + inputLine);
                 }
 
                 // Cerramos los flujos de datos y el socket
