@@ -26,7 +26,6 @@ public class Client extends Thread{
         Socket socket = new Socket();
         // Esto siver para realizar la conexión y configurar un timeOut máximo de 5 segundos
         socket.connect(new InetSocketAddress(ip, port), 5000);
-        // System.out.println("C. Conectado al servidor");
         
         // PrintWriter es el encargado de enviar un mensaje al servidor
         PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
