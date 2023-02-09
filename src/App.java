@@ -44,6 +44,10 @@ public class App {
                         System.out.println("C. Comandos disponibles:");
                         System.out.println("C. //newagenda: Recarga la lista de contactos");
                         System.out.println("C. //msg:ip:texto: Envia el texto solo a la IP indicada");
+                        System.out.println("C. //showip: Muestra las IPs de los contactos");
+                    }else if(texto.equals("//showip")){
+                        System.out.println("C. My IP: " + myIp);
+                        for(String ip : map.keySet()) System.out.println("C. " + ip + " - " + map.get(ip).getName() + " - " + map.get(ip).getPort());
                     }else{
                         System.out.println("C. Comando no reconocido");
                     }
