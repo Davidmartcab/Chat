@@ -36,7 +36,8 @@ public class Server{
                 String inputLine;
                 while ((inputLine = in.readLine()) != null) {
                     // SI hay texto lo puestra y le envía un mensaje de vuelta
-                    System.out.println(color+"S. " + name + ": " + inputLine + "\u001B[0m");
+                    System.out.println(color+"S. " + name + ": " + inputLine + "\033[0m");
+                    // System.out.println(color+"S. " + name + ": " + inputLine + "\u001B[0m");
                 }
 
                 // Cerramos los flujos de datos y el socket
