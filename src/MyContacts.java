@@ -23,7 +23,7 @@ public class MyContacts {
 
     public static HashMap<String, IpPort> getMap() {
         return new HashMap<>(){{
-            put("192.168.13.28", new IpPort(9090, "Mario", RED));
+            put("192.168.13.28", new IpPort(9090, "Mario", "\u001B[40m"));
             put("192.168.13.22", new IpPort(9090, "Asier", BLUE));
             put("192.168.13.21", new IpPort(9090, "Goyo", GREEN));
             put("192.168.13.37", new IpPort(9090, "David", YELLOW));
