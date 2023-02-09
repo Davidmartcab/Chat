@@ -7,7 +7,6 @@ public class App {
 // El App.java es el cliente, y el Server.java es el servidor.
 // Ir añadiendo aquí ti IP para añadirte a la lista de contactos.
     private final static HashMap<String, IpPort> map = MyContacts.getMap();
-    private static ArrayList<String> errores = new ArrayList<String>();
 
     public static void main(String[] args) throws Exception {
         
@@ -18,9 +17,8 @@ public class App {
         System.out.println("C: Línea > ");
         try {
             while((texto = br.readLine()) != null && texto.length() > 0){
-                printErrors();
                 for(String ip : map.keySet()){
-                    new Client(texto, ip, map.get(ip).getPort(), errores).start();
+                    new Client(texto, ip, map.get(ip).getPort()).start();
                 }
             }
         } catch (Exception e) {
@@ -29,14 +27,4 @@ public class App {
         System.exit(0);
     }
 
-    private static void printErrors(){
-        if(errores.size() > 0){
-            System.out.println("--------------------");
-            for(String i : errores){
-                System.out.println("    "+i);
-            }
-            System.out.println("--------------------");
-            errores.clear();
-        }
-    }
 }
