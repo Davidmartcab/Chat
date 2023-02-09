@@ -7,7 +7,7 @@ public class Server{
     private static final int port = 9090;
 
 
-    private final static HashMap<String, IpPort> map = MyContacts.getMap();
+    private static HashMap<String, IpPort> map = MyContacts.getMap();
 
     public static void main(String[] args) throws Exception {
         try (ServerSocket serverSocket = new ServerSocket(port)) {
@@ -33,8 +33,15 @@ public class Server{
                 // Leemos el mensaje del cliente
                 String inputLine;
                 while ((inputLine = in.readLine()) != null) {
+                    switch(inputLine.toLowerCase()){
+                        case "//newagenda":
+                            map = MyContacts.getMap();
+                        break;
+                        default:
+                            System.out.println(color+"S. " + name + ": " + inputLine + "\033[0m");
+                        break;
+                    }
                     // Si hay texto lo puestra y le envía un mensaje de vuelta
-                    System.out.println(color+"S. " + name + ": " + inputLine + "\033[0m");
                 }
 
                 // Cerramos los flujos de datos y el socket
