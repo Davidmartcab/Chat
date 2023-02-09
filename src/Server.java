@@ -20,7 +20,7 @@ public class Server{
                 // Muestra la dirección IP del cliente
                 IpPort sender = map.get(clientSocket.getInetAddress().getHostAddress());
                 String name;
-                String color = "\u001B[47m";
+                String color = "\u001B[37m";
                 if(sender == null) name = clientSocket.getInetAddress().getHostAddress();
                 else {
                     name = sender.getName();

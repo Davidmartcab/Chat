@@ -10,7 +10,6 @@ public class MyContacts {
         put("4", "\033[0;34m");
         put("5", "\033[0;35m");
         put("6", "\033[0;36m");
-        put("7", "\033[0;37m");
     }};
     private static ArrayList<Contact> contacts = new ArrayList<>();
 
