@@ -2,12 +2,10 @@ public class IpPort {
 
     private final int port;
     private final String name;
-    private final String color;
 
-    public IpPort(int port, String name, String color){
+    public IpPort(int port, String name){
         this.port = port;
         this.name = name;
-        this.color = color;
     }
 
     public int getPort() {
@@ -16,9 +14,5 @@ public class IpPort {
 
     public String getName() {
         return name;
-    }
-
-    public String getColor() {
-        return color;
     }
 }

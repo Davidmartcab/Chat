@@ -20,12 +20,8 @@ public class Server{
                 // Muestra la dirección IP del cliente
                 IpPort sender = map.get(clientSocket.getInetAddress().getHostAddress());
                 String name;
-                String color = "\u001B[47m";
                 if(sender == null) name = clientSocket.getInetAddress().getHostAddress();
-                else {
-                    name = sender.getName();
-                    color = sender.getColor();
-                }
+                else name = sender.getName();
                 
                 // System.out.println("S: Conexión aceptada desde " + name);
                 // PrintWriter es el encargado de recibir el mensaje del cliente
@@ -36,7 +32,7 @@ public class Server{
                 String inputLine;
                 while ((inputLine = in.readLine()) != null) {
                     // SI hay texto lo puestra y le envía un mensaje de vuelta
-                    System.out.println(color+"S. " + name + ": " + inputLine + "\033[0m");
+                    System.out.println("S. " + name + ": " + inputLine);
                     // System.out.println(color+"S. " + name + ": " + inputLine + "\u001B[0m");
                 }
 
