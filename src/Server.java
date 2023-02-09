@@ -25,7 +25,6 @@ public class Server{
                 
                 // System.out.println("S: Conexión aceptada desde " + name);
                 // PrintWriter es el encargado de recibir el mensaje del cliente
-                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
                 // BufferedReader es el encargado de enviar la respuesta al cliente
                 BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
@@ -37,7 +36,6 @@ public class Server{
                 }
 
                 // Cerramos los flujos de datos y el socket
-                out.close();
                 in.close();
                 clientSocket.close();
             }
