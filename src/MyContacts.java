@@ -12,12 +12,21 @@ public class MyContacts {
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
 
+    public static final String BLACK = "\033[0;30m";   // BLACK
+    public static final String RED = "\033[0;31m";     // RED
+    public static final String GREEN = "\033[0;32m";   // GREEN
+    public static final String YELLOW = "\033[0;33m";  // YELLOW
+    public static final String BLUE = "\033[0;34m";    // BLUE
+    public static final String PURPLE = "\033[0;35m";  // PURPLE
+    public static final String CYAN = "\033[0;36m";    // CYAN
+    public static final String WHITE = "\033[0;37m";   // WHITE
+
     public static HashMap<String, IpPort> getMap() {
         return new HashMap<>(){{
-            put("192.168.13.28", new IpPort(9090, "Mario", ANSI_RED));
-            put("192.168.13.22", new IpPort(9090, "Asier", ANSI_BLUE));
-            put("192.168.13.21", new IpPort(9090, "Goyo", ANSI_GREEN));
-            put("192.168.13.37", new IpPort(9090, "David", ANSI_YELLOW));
+            put("192.168.13.28", new IpPort(9090, "Mario", RED));
+            put("192.168.13.22", new IpPort(9090, "Asier", BLUE));
+            put("192.168.13.21", new IpPort(9090, "Goyo", GREEN));
+            put("192.168.13.37", new IpPort(9090, "David", YELLOW));
         }};
     }
 }
