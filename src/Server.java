@@ -26,18 +26,15 @@ public class Server{
                     name = sender.getName();
                     color = sender.getColor();
                 }
-                
-                // System.out.println("S: Conexión aceptada desde " + name);
-                // PrintWriter es el encargado de recibir el mensaje del cliente
+
                 // BufferedReader es el encargado de enviar la respuesta al cliente
                 BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
                 // Leemos el mensaje del cliente
                 String inputLine;
                 while ((inputLine = in.readLine()) != null) {
-                    // SI hay texto lo puestra y le envía un mensaje de vuelta
+                    // Si hay texto lo puestra y le envía un mensaje de vuelta
                     System.out.println(color+"S. " + name + ": " + inputLine + "\033[0m");
-                    // System.out.println(color+"S. " + name + ": " + inputLine + "\u001B[0m");
                 }
 
                 // Cerramos los flujos de datos y el socket
