@@ -37,6 +37,7 @@ public class App {
                     else System.out.println("C. Comando no reconocido");
                 }else{
                     if(!texto.equals("")) 
+                        new Client(texto, myIp).start();
                         for(String ip : map.keySet()) new Client(texto, ip).start();
                 }
             }

@@ -8,8 +8,13 @@ public class Server{
 
 
     private static HashMap<String, IpPort> map = MyContacts.getMap();
+    private static String myIp;
 
     public static void main(String[] args) throws Exception {
+        try (final DatagramSocket datagramSocket = new DatagramSocket()) {
+            datagramSocket.connect(InetAddress.getByName("8.8.8.8"), 12345);
+            myIp = datagramSocket.getLocalAddress().getHostAddress();
+        }
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             System.out.println("S: Servidor escuchando en el puerto " + port);
 
@@ -18,13 +23,18 @@ public class Server{
                 // Aceptamos una nueva conexión con accept()
                 Socket clientSocket = serverSocket.accept();
                 // Muestra la dirección IP del cliente
-                IpPort sender = map.get(clientSocket.getInetAddress().getHostAddress());
                 String name;
                 String color = "\u001B[37m";
-                if(sender == null) name = clientSocket.getInetAddress().getHostAddress();
-                else {
-                    name = sender.getName();
-                    color = sender.getColor();
+                if(clientSocket.getInetAddress().getHostAddress().equals(myIp)){
+                    name = "Yo";
+                    color = "\u001B[32m";
+                }else{
+                    IpPort sender = map.get(clientSocket.getInetAddress().getHostAddress());
+                    if(sender == null) name = clientSocket.getInetAddress().getHostAddress();
+                    else {
+                        name = sender.getName();
+                        color = sender.getColor();
+                    }
                 }
 
                 // BufferedReader es el encargado de enviar la respuesta al cliente
