@@ -4,20 +4,12 @@ import java.util.HashMap;
 
 public class Server{
 
-    private static int port = 9090;
+    private static final int port = 9090;
 
 
     private static HashMap<String, IpPort> map = MyContacts.getMap();
 
     public static void main(String[] args) throws Exception {
-        try {
-            System.out.println("S. Introcude tu puerto, dejalo vació para el 9090");
-            InputStreamReader in = new InputStreamReader(System.in);
-            BufferedReader br = new BufferedReader(in);
-            port = Integer.parseInt(br.readLine());
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             System.out.println("S: Servidor escuchando en el puerto " + port);
 

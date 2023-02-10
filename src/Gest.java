@@ -20,9 +20,9 @@ public class Gest {
         writeContact();
     }
 
-    public Gest(String ip, String name, int port, String color){
+    public Gest(String ip, String name, String color){
         contacts();
-        contacts.add(new Contact(ip, port, name, color));
+        contacts.add(new Contact(ip, name, color));
         writeContact();
     }
 
@@ -42,8 +42,8 @@ public class Gest {
 
             while((linea = br.readLine()) != null){
                 campos = linea.split(",");
-                if(campos.length == 4){
-                    contacto = new Contact(campos[0], Integer.parseInt(campos[1]), campos[2], campos[3]);
+                if(campos.length == 3){
+                    contacto = new Contact(campos[0], campos[1], campos[2]);
                     contacts.add(contacto);
                 }
             }
@@ -62,7 +62,7 @@ public class Gest {
             BufferedWriter bw = new BufferedWriter(fw);
 
             for(Contact c : contacts){
-                bw.write(c.getIp() + "," + c.getPort() + "," + c.getName() + "," + c.getColor());
+                bw.write(c.getIp() + "," + c.getName() + "," + c.getColor());
                 bw.newLine();
             }
             bw.close();

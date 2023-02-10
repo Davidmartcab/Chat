@@ -18,7 +18,7 @@ public class MyContacts {
         contacts = gest.getContacts();
         return new HashMap<>(){{
             for(Contact contact : contacts){
-                put(contact.getIp(), new IpPort(contact.getPort(), contact.getName(), map.get(contact.getColor())));
+                put(contact.getIp(), new IpPort(contact.getName(), map.get(contact.getColor())));
             }
         }};
     }

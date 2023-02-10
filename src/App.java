@@ -37,7 +37,7 @@ public class App {
                     else System.out.println("C. Comando no reconocido");
                 }else{
                     if(!texto.equals("")) 
-                        for(String ip : map.keySet()) new Client(texto, ip, map.get(ip).getPort()).start();
+                        for(String ip : map.keySet()) new Client(texto, ip).start();
                 }
             }
         } catch (Exception e) {
@@ -47,12 +47,12 @@ public class App {
 
     private static void showIp(){
         System.out.println("C. My IP: " + myIp);
-        for(String ip : map.keySet()) System.out.println("C. " + ip + " - " + map.get(ip).getName() + " - " + map.get(ip).getPort());
+        for(String ip : map.keySet()) System.out.println("C. " + ip + " - " + map.get(ip).getName());
     }
 
     private static void newAgenda(){
         map = MyContacts.getMap();
-        new Client("//newagenda", myIp, map.get(myIp).getPort()).start();
+        new Client("//newagenda", myIp).start();
     }
 
     private static void newAgendaOnlyClient(){
@@ -61,18 +61,17 @@ public class App {
 
     private static void addContact(String texto){
         String[] parts = texto.split(":");
-        if(parts.length != 5){
-            System.out.println("C. Formato incorrecto. //add:ip:port:name:color");
+        if(parts.length != 4){
+            System.out.println("C. Formato incorrecto. //add:ip:name:color");
             return;
         }
         try {
             String ip = parts[1];
-            int port = Integer.parseInt(parts[2]);
-            String name = parts[3];
-            String color = parts[4];
+            String name = parts[2];
+            String color = parts[3];
             int colo = Integer.parseInt(color);
-            if(colo < 0 || colo > 7) throw new Exception("A. Color no válido");
-            new Gest(ip, name, port, color);
+            if(colo < 0 || colo > 6) throw new Exception("A. Color no válido");
+            new Gest(ip, name, color);
             System.out.println("C. Contacto añadido");
         } catch (Exception e) {
             System.out.println("A. Error: " + e.getMessage());
@@ -96,31 +95,15 @@ public class App {
 
     private static void sendMsg(String texto){
         String[] parts = texto.split(":");
-        if(parts.length != 3 && parts.length != 4){
-            System.out.println("C. Formato incorrecto. //msg:ip:texto or //msg:ip:port:texto");
+        if(parts.length != 3){
+            System.out.println("C. Formato incorrecto. //msg:ip:texto");
             return;
         }
-        if(parts.length == 3){
-            String ip = parts[1];
-            String msg = parts[2];
-            if(map.containsKey(ip)){
-                msg = "Private: " + msg;
-                if(!ip.equals(myIp)) new Client(msg, ip, map.get(ip).getPort()).start();
-                new Client(msg, myIp, map.get(myIp).getPort()).start();
-            }else System.out.println("C. No se ha encontrado la IP: " + ip);
-        }else{
-            String ip = parts[1];
-            int port = 0;
-            try {
-                port = Integer.parseInt(parts[2]);
-            } catch (Exception e) {
-                System.out.println("A. Puerto no válido");
-            }
-            String msg = parts[3];
-            msg = "Private: " + msg;
-            if(!ip.equals(myIp)) new Client(msg, ip, port).start();
+        String ip = parts[1];
+        String msg = parts[2];
+        msg = "Private: " + msg;
+        if(!ip.equals(myIp)) new Client(msg, ip).start();
 
-        }
     }
 
     private static void help(){
@@ -128,8 +111,7 @@ public class App {
         System.out.println("C. //newagenda: Recarga la lista de contactos");
         System.out.println("C. //newagendaonlyclient: Recarga la lista de contactos, solo del cliente");
         System.out.println("C. //msg:ip:texto: Envia el texto solo a la IP indicada");
-        System.out.println("C. //msg:ip:port:texto: Envia el texto solo a la IP indicada fuera de los contactos");
-        System.out.println("C. //add:ip:port:name:color: Añade un contacto");
+        System.out.println("C. //add:ip:name:color: Añade un contacto");
         System.out.println("C. //delete:ip: Elimina un contacto");
         System.out.println("C. //showip: Muestra las IPs de los contactos");
         System.out.println("C. //exit: Cierra la aplicación");

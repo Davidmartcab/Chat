@@ -5,27 +5,25 @@ public class Client extends Thread{
 
     String mensaje;
     String ip;
-    int port;
     
 
-    public Client(String mensaje, String ip, int port){
+    public Client(String mensaje, String ip){
         this.mensaje = mensaje;
         this.ip = ip;
-        this.port = port;
     }
 
     public void run(){
         try {
-            sender(mensaje, ip, port);
+            sender(mensaje, ip);
         } catch (Exception e) {
         }
     }
 
-    public void sender(String mensaje, String ip, int port) throws UnknownHostException, IOException{
+    public void sender(String mensaje, String ip) throws UnknownHostException, IOException{
         // Realiza la conexión
         Socket socket = new Socket();
         // Esto siver para realizar la conexión y configurar un timeOut máximo de 5 segundos
-        socket.connect(new InetSocketAddress(ip, port), 5000);
+        socket.connect(new InetSocketAddress(ip, 9090), 5000);
         
         // PrintWriter es el encargado de enviar un mensaje al servidor
         PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
