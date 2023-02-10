@@ -26,7 +26,7 @@ public class App {
         try {
             while((texto = br.readLine()) != null){
                 if(texto.contains("//")){
-                    if(texto.contains("//msg:")) sendMsg(texto);
+                    if(texto.contains("//msg")) sendMsg(texto);
                     else if(texto.toLowerCase().equals("//newagenda")) newAgenda();
                     else if(texto.toLowerCase().equals("//newagendaonlyclient")) newAgendaOnlyClient();
                     else if(texto.toLowerCase().equals("//help")) help();
@@ -96,17 +96,31 @@ public class App {
 
     private static void sendMsg(String texto){
         String[] parts = texto.split(":");
-        if(parts.length != 3){
-            System.out.println("C. Formato incorrecto. //msg:ip:texto");
+        if(parts.length != 3 && parts.length != 4){
+            System.out.println("C. Formato incorrecto. //msg:ip:texto or //msg:ip:port:texto");
             return;
         }
-        String ip = parts[1];
-        String msg = parts[2];
-        if(map.containsKey(ip)){
+        if(parts.length == 3){
+            String ip = parts[1];
+            String msg = parts[2];
+            if(map.containsKey(ip)){
+                msg = "Private: " + msg;
+                if(!ip.equals(myIp)) new Client(msg, ip, map.get(ip).getPort()).start();
+                new Client(msg, myIp, map.get(myIp).getPort()).start();
+            }else System.out.println("C. No se ha encontrado la IP: " + ip);
+        }else{
+            String ip = parts[1];
+            int port = 0;
+            try {
+                port = Integer.parseInt(parts[2]);
+            } catch (Exception e) {
+                System.out.println("A. Puerto no válido");
+            }
+            String msg = parts[3];
             msg = "Private: " + msg;
-            if(!ip.equals(myIp)) new Client(msg, ip, map.get(ip).getPort()).start();
-            new Client(msg, myIp, map.get(myIp).getPort()).start();
-        }else System.out.println("C. No se ha encontrado la IP: " + ip);
+            if(!ip.equals(myIp)) new Client(msg, ip, port).start();
+
+        }
     }
 
     private static void help(){
@@ -114,6 +128,7 @@ public class App {
         System.out.println("C. //newagenda: Recarga la lista de contactos");
         System.out.println("C. //newagendaonlyclient: Recarga la lista de contactos, solo del cliente");
         System.out.println("C. //msg:ip:texto: Envia el texto solo a la IP indicada");
+        System.out.println("C. //msg:ip:port:texto: Envia el texto solo a la IP indicada fuera de los contactos");
         System.out.println("C. //add:ip:port:name:color: Añade un contacto");
         System.out.println("C. //delete:ip: Elimina un contacto");
         System.out.println("C. //showip: Muestra las IPs de los contactos");
