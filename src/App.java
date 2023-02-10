@@ -54,6 +54,10 @@ public class App {
 
     private static void sendMsg(String texto){
         String[] parts = texto.split(":");
+        if(parts.length != 3){
+            System.out.println("C. Formato incorrecto. //msg:ip:texto");
+            return;
+        }
         String ip = parts[1];
         String msg = parts[2];
         if(map.containsKey(ip)){
