@@ -16,7 +16,7 @@ public class App {
             datagramSocket.connect(InetAddress.getByName("8.8.8.8"), 12345);
             myIp = datagramSocket.getLocalAddress().getHostAddress();
         }
-
+        System.out.print("\033[H\033[2J");  
         String texto;
         InputStreamReader in = new InputStreamReader(System.in);
         BufferedReader br = new BufferedReader(in);
@@ -33,6 +33,9 @@ public class App {
                     else if(texto.equals("//showip")) showIp();
                     else if(texto.contains("//add")) addContact(texto);
                     else if(texto.contains("//delete")) deleteContact(texto);
+                    else if(texto.equals("//clean")) System.out.print("\033[H\033[2J");
+                    else if(texto.equals("//cleanserver")) cleanServer();
+                    else if(texto.equals("//cleanall")) cleanAll();
                     else if(texto.equals("//exit")) exit();
                     else System.out.println("C. Comando no reconocido");
                 }else{
@@ -94,6 +97,15 @@ public class App {
         }
     }
 
+    private static void cleanServer(){
+        new Client("//cleanserver", myIp).start();
+    }
+    
+    private static void cleanAll(){
+        System.out.print("\033[H\033[2J");
+        new Client("//cleanserver", myIp).start();
+    }
+
     private static void sendMsg(String texto){
         String[] parts = texto.split(":");
         if(parts.length != 3){
@@ -117,6 +129,9 @@ public class App {
         System.out.println("C. //msg:ip:texto: Envia el texto solo a la IP indicada");
         System.out.println("C. //add:ip:name:color: Añade un contacto");
         System.out.println("C. //delete:ip: Elimina un contacto");
+        System.out.println("C. //clean: Limpia la pantalla");
+        System.out.println("C. //cleanserver: Limpia la pantalla del servidor");
+        System.out.println("C. //cleanall: Limpia la pantalla del servidor y del cliente");
         System.out.println("C. //showip: Muestra las IPs de los contactos");
         System.out.println("C. //exit: Cierra la aplicación");
     }

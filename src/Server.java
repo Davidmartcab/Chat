@@ -16,6 +16,7 @@ public class Server{
             myIp = datagramSocket.getLocalAddress().getHostAddress();
         }
         try (ServerSocket serverSocket = new ServerSocket(port)) {
+            System.out.print("\033[H\033[2J");  
             System.out.println("S: Servidor escuchando en el puerto " + port);
 
             // Bucle infinito de escucha
@@ -46,6 +47,10 @@ public class Server{
                     switch(inputLine.toLowerCase()){
                         case "//newagenda":
                             map = MyContacts.getMap();
+                        break;
+                        case "//cleanserver":
+                            System.out.print("\033[H\033[2J");
+                            System.out.println("S: Servidor escuchando en el puerto " + port);
                         break;
                         default:
                             System.out.println(color+"S. " + name + ": " + inputLine + "\033[0m");
