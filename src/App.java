@@ -103,7 +103,10 @@ public class App {
         String ip = parts[1];
         String msg = parts[2];
         msg = "Private: " + msg;
-        if(!ip.equals(myIp)) new Client(msg, ip).start();
+        if(!ip.equals(myIp)) {
+            new Client(msg, ip).start();
+            new Client(msg, myIp).start();
+        }
 
     }
 
