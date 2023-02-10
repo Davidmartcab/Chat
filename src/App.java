@@ -26,7 +26,8 @@ public class App {
         try {
             while((texto = br.readLine()) != null){
                 if(texto.contains("//")){
-                    if(texto.contains("//msg")) sendMsg(texto);
+                    if(texto.contains("//msgall")) sendMsgAll(texto);
+                    else if(texto.contains("//msg")) sendMsg(texto);
                     else if(texto.toLowerCase().equals("//newagenda")) newAgenda();
                     else if(texto.toLowerCase().equals("//newagendaonlyclient")) newAgendaOnlyClient();
                     else if(texto.toLowerCase().equals("//help")) help();
@@ -122,11 +123,42 @@ public class App {
 
     }
 
+    private static void sendMsgAll(String texto){
+        String[] parts = texto.split(":");
+        if(parts.length != 2){
+            System.out.println("C. Formato incorrecto. //msgall:texto");
+            return;
+        }
+        String msg = parts[1];
+        msg = "Public: " + msg;
+        String[] thisIpAr = iperator();
+        String thisIp = thisIpAr[0] + "." + thisIpAr[1] + "." + thisIpAr[2] + ".";
+        for(int i = 2; i < 255; i++){
+            String ip = thisIp + i;
+            new Client(msg, ip).start();
+        }
+    }
+
+    private static String[] iperator(){
+        String[] toRet = new String[3];
+        String num="";
+        int count = 0;
+        for(char c : myIp.toCharArray()){
+            if(c == '.'){
+                toRet[count] = num;
+                num = "";
+                count++;
+            }else num += c;
+        }
+        return toRet;
+    }
+
     private static void help(){
         System.out.println("C. Comandos disponibles:");
         System.out.println("C. //newagenda: Recarga la lista de contactos");
         System.out.println("C. //newagendaonlyclient: Recarga la lista de contactos, solo del cliente");
         System.out.println("C. //msg:ip:texto: Envia el texto solo a la IP indicada");
+        System.out.println("C. //msgall:texto: Envia el texto a todas las IPs");
         System.out.println("C. //add:ip:name:color: Añade un contacto");
         System.out.println("C. //delete:ip: Elimina un contacto");
         System.out.println("C. //clean: Limpia la pantalla");
