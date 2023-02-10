@@ -9,17 +9,28 @@ public class Gest {
         contacts();
     }
 
+    public Gest(String ip){
+        contacts();
+        for(Contact c : contacts){
+            if(c.getIp().equals(ip)){
+                contacts.remove(c);
+                break;
+            }
+        }
+        writeContact();
+    }
+
+    public Gest(String ip, String name, int port, String color){
+        contacts();
+        contacts.add(new Contact(ip, port, name, color));
+        writeContact();
+    }
+
     public ArrayList<Contact> getContacts() {
         return contacts;
     }
 
     private void contacts(){
-        // Leer el fichero agenda.txt
-        // Cada línea es un contacto
-        // Cada contacto tiene 4 campos separados por comas
-        // Cada campo es un atributo del contacto
-        // Cada contacto se añade a la lista de contactos
-
         String fichero = "agenda.txt";
         String linea = null;
         String[] campos = null;
@@ -31,10 +42,30 @@ public class Gest {
 
             while((linea = br.readLine()) != null){
                 campos = linea.split(",");
-                contacto = new Contact(campos[0], Integer.parseInt(campos[1]), campos[2], campos[3]);
-                contacts.add(contacto);
+                if(campos.length == 4){
+                    contacto = new Contact(campos[0], Integer.parseInt(campos[1]), campos[2], campos[3]);
+                    contacts.add(contacto);
+                }
             }
             br.close();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+    }
+
+    private void writeContact(){
+        String fichero = "agenda.txt";
+
+        try {
+            FileWriter fw = new FileWriter(fichero);
+            BufferedWriter bw = new BufferedWriter(fw);
+
+            for(Contact c : contacts){
+                bw.write(c.getIp() + "," + c.getPort() + "," + c.getName() + "," + c.getColor());
+                bw.newLine();
+            }
+            bw.close();
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }

@@ -28,8 +28,11 @@ public class App {
                 if(texto.contains("//")){
                     if(texto.contains("//msg:")) sendMsg(texto);
                     else if(texto.toLowerCase().equals("//newagenda")) newAgenda();
+                    else if(texto.toLowerCase().equals("//newagendaonlyclient")) newAgendaOnlyClient();
                     else if(texto.toLowerCase().equals("//help")) help();
-                    else if(texto.equals("//showip")) showIp();    
+                    else if(texto.equals("//showip")) showIp();
+                    else if(texto.contains("//add")) addContact(texto);
+                    else if(texto.contains("//delete")) deleteContact(texto);
                     else if(texto.equals("//exit")) exit();
                     else System.out.println("C. Comando no reconocido");
                 }else{
@@ -52,6 +55,45 @@ public class App {
         new Client("//newagenda", myIp, map.get(myIp).getPort()).start();
     }
 
+    private static void newAgendaOnlyClient(){
+        map = MyContacts.getMap();
+    }
+
+    private static void addContact(String texto){
+        String[] parts = texto.split(":");
+        if(parts.length != 5){
+            System.out.println("C. Formato incorrecto. //add:ip:port:name:color");
+            return;
+        }
+        try {
+            String ip = parts[1];
+            int port = Integer.parseInt(parts[2]);
+            String name = parts[3];
+            String color = parts[4];
+            int colo = Integer.parseInt(color);
+            if(colo < 0 || colo > 7) throw new Exception("A. Color no válido");
+            new Gest(ip, name, port, color);
+            System.out.println("C. Contacto añadido");
+        } catch (Exception e) {
+            System.out.println("A. Error: " + e.getMessage());
+        }
+    }
+
+    private static void deleteContact(String texto){
+        String[] parts = texto.split(":");
+        if(parts.length != 2){
+            System.out.println("C. Formato incorrecto. //delete:ip");
+            return;
+        }
+        try {
+            String ip = parts[1];
+            new Gest(ip);
+            System.out.println("C. Contacto eliminado");
+        } catch (Exception e) {
+            System.out.println("A. Error: " + e.getMessage());
+        }
+    }
+
     private static void sendMsg(String texto){
         String[] parts = texto.split(":");
         if(parts.length != 3){
@@ -70,7 +112,10 @@ public class App {
     private static void help(){
         System.out.println("C. Comandos disponibles:");
         System.out.println("C. //newagenda: Recarga la lista de contactos");
+        System.out.println("C. //newagendaonlyclient: Recarga la lista de contactos, solo del cliente");
         System.out.println("C. //msg:ip:texto: Envia el texto solo a la IP indicada");
+        System.out.println("C. //add:ip:port:name:color: Añade un contacto");
+        System.out.println("C. //delete:ip: Elimina un contacto");
         System.out.println("C. //showip: Muestra las IPs de los contactos");
         System.out.println("C. //exit: Cierra la aplicación");
     }
